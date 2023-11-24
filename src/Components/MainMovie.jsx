@@ -1,15 +1,26 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { setMovies, increasePage } from './actions';
+import React, { useEffect, useState } from 'react';
+import { connect, useDispatch } from 'react-redux';
+import { setMovies, increasePage, setTotalPages } from './actions';
 import "./MainMovie.css";
 
 const MainMovie = ({ movieData, currentPage, totalPages, setMovies, increasePage, setTotalPages }) => {
+    const [searchTerm, setSearchTerm] = useState('');
+    const dispatch = useDispatch();
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(
-                    `https://api.themoviedb.org/3/movie/top_rated?api_key=c871de30295795a72989ac274718b1c7&page=${currentPage}`
-                );
+                let response;
+                if (searchTerm.trim() !== '') {
+                    response = await fetch(
+                        `https://api.themoviedb.org/3/search/movie?api_key=c871de30295795a72989ac274718b1c7&page=${currentPage}&query=${searchTerm}`
+                    );
+                } else {
+                    response = await fetch(
+                        `https://api.themoviedb.org/3/movie/top_rated?api_key=c871de30295795a72989ac274718b1c7&page=${currentPage}`
+                    );
+                }
+
                 const data = await response.json();
                 if (currentPage === 1) {
                     setMovies(data.results);
@@ -17,13 +28,12 @@ const MainMovie = ({ movieData, currentPage, totalPages, setMovies, increasePage
                     setMovies([...movieData, ...data.results]);
                 }
                 setTotalPages(data.total_pages);
-
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
         fetchData();
-    }, [currentPage]);
+    }, [searchTerm, currentPage, setMovies, setTotalPages]);
 
     const handleShowMore = () => {
         if (currentPage < totalPages) {
@@ -31,22 +41,30 @@ const MainMovie = ({ movieData, currentPage, totalPages, setMovies, increasePage
         }
     };
 
+    const handleSearchChange = (event) => {
+        setSearchTerm(event.target.value);
+        dispatch({ type: 'SET_CURRENT_PAGE', payload: 1 });
+    };
+
     return (
         <div className="main-container">
             <div className="container mt-5">
-                <h1 className="text-center mb-5">Top Rated Movies</h1>
+                <h1 className="text-center text-white mb-5 display-5">Top Rated Movies</h1>
+                <div className="mb-5 text-center">
+                    <input type="text" placeholder="Search movies..." className="p-2 w-50 glass-input" value={searchTerm} onChange={handleSearchChange} />
+                </div>
                 <div className="row">
                     {movieData.map((movie) => (
                         <div key={movie.id} className="col-md-3 mb-4">
-                            <div className="glass-morphism h-100 overflow-hidden">
+                            <div className="card glass-morphism h-100 overflow-hidden">
                                 <img
                                     src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-                                    className="img-fluid"
+                                    className="card-img-top h-75"
                                     alt={movie.title}
                                 />
-                                <div className="">
-                                    <h5 className="text-white">{movie.title}</h5>
-                                    <p className="text-white-50">{movie.release_date}</p>
+                                <div className="card-body">
+                                    <h4 className="card-title text-white">{movie.title}</h4>
+                                    <p className="card-text text-white">{movie.release_date}</p>
                                 </div>
                             </div>
                         </div>
@@ -54,7 +72,7 @@ const MainMovie = ({ movieData, currentPage, totalPages, setMovies, increasePage
                 </div>
                 {currentPage < totalPages && (
                     <div className="text-center">
-                        <button className="btn btn-primary" onClick={handleShowMore}>
+                        <button className="glass-button" onClick={handleShowMore}>
                             Show More
                         </button>
                     </div>
@@ -70,4 +88,4 @@ const mapStateToProps = (state) => ({
     totalPages: state.totalPages,
 });
 
-export default connect(mapStateToProps, { setMovies, increasePage })(MainMovie);
+export default connect(mapStateToProps, { setMovies, increasePage, setTotalPages })(MainMovie);

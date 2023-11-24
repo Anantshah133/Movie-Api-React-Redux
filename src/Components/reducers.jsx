@@ -21,6 +21,11 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 totalPages: action.payload,
             };
+        case 'SET_CURRENT_PAGE':
+            return {
+                ...state,
+                currentPage: action.payload,
+            };
         default:
             return state;
     }

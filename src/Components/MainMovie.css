@@ -1,22 +1,7 @@
 body {
-    background-color: #282c34;
-    color: white;
-}
-.section{
-    background: linear-gradient(-30deg, #03a9f4 0%, #3a78b7 50%, #262626 50%, #607d8b 100%);
-    animation: animate 10s linear infinite;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100vh;
-}
-@keyframes animate{
-    0%{
-        filter: hue-rotate(0deg);
-    }
-    100% {
-        filter: hue-rotate(360deg);
-    }
+    background: url('./felix-mooneeram-evlkOfkQ5rE-unsplash.jpg') fixed no-repeat center;
+    /* background: linear-gradient(to right, #74ebd5, #9face6); */
+    background-size: cover;
 }
 
 .main-container {
@@ -24,16 +9,53 @@ body {
 }
 
 .glass-morphism {
-    background-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 0 80px rgba(0, 0, 0, 0.3);
-    border-radius: 20px;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(40px);
-    transition: background 0.3s, border 0.3s, transform 0.3s;
+    background-color: rgba(0, 0, 0, 0.324) !important;
+    border-radius: 10px !important;
+    backdrop-filter: blur(13px);
+    border: 1px solid rgba(171, 171, 171, 0.577) !important;
 }
 
-/* .glass-morphism:hover {
+.glass-button {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    padding: 15px 25px;
+    font-size: 18px;
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: background 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.glass-button:hover {
     background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.3);
     transform: scale(1.02);
-} */
+}
+
+
+
+
+
+
+/* Glassmorphic Search Input Styles */
+.glass-input::placeholder{
+    color: #fff;
+    /* font-size: 18px; */
+    letter-spacing: 2px;
+    font-weight: 100;
+}
+.glass-input {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    border: none;
+    width: 100%;
+    font-family: 'Times New Roman', Times, serif;
+    letter-spacing: 1.2px;
+    color: #fff;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.172);
+}
