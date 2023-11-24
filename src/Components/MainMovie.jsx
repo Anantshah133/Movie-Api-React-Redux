@@ -38,15 +38,15 @@ const MainMovie = ({ movieData, currentPage, totalPages, setMovies, increasePage
                 <div className="row">
                     {movieData.map((movie) => (
                         <div key={movie.id} className="col-md-3 mb-4">
-                            <div className="card glass-morphism h-100 overflow-hidden">
+                            <div className="glass-morphism h-100 overflow-hidden">
                                 <img
                                     src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-                                    className="card-img-top h-75"
+                                    className="img-fluid"
                                     alt={movie.title}
                                 />
-                                <div className="card-body">
-                                    <h5 className="card-title text-white">{movie.title}</h5>
-                                    <p className="card-text text-white-50">{movie.release_date}</p>
+                                <div className="">
+                                    <h5 className="text-white">{movie.title}</h5>
+                                    <p className="text-white-50">{movie.release_date}</p>
                                 </div>
                             </div>
                         </div>

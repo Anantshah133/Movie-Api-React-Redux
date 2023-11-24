@@ -9,7 +9,9 @@ function App() {
   return (
     <Provider store={store}>
       <div className="App">
-        <MainMovie />
+        <div className='section'>
+          <MainMovie />
+        </div>
       </div>
     </Provider>
   );
